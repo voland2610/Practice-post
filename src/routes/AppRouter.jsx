@@ -1,12 +1,16 @@
 import { Routes, Route } from "react-router";
 import WelcomePage from "../pages/WelcomePage";
-// import ContentPage from "../pages/ContentPage";
+import MainLayout from "../mainLayout/MainLayout";
+import ContentPage from "../pages/ContentPage";
+
 
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<WelcomePage />} />
-      {/* <Route path="/content" element={<ContentPage />} /> */}
+      <Route element={<MainLayout />}> 
+        <Route index element={<WelcomePage />} />
+        <Route path="content" element={<ContentPage />}></Route>
+      </Route>
     </Routes>
   );
 }

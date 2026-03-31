@@ -5,7 +5,7 @@ import styles from '../styles/welcomPage/WelcomPage.module.css'; // если sty
 function WelcomePage() {
   const navigate = useNavigate();
   const goToSettings = () => {
-    navigate("/ContentPage"); 
+    navigate("/content"); 
   };
   return (
     <>
