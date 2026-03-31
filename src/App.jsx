@@ -1,7 +1,9 @@
+import PostMainPage from "./components/PostMainPage";
+
 const App = () => {
   return (
     <>
-      <h1>My React Practice App</h1>
+      <PostMainPage/>
     </>
   )
 }
