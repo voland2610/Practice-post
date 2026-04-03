@@ -21,6 +21,14 @@
 ## ⚡ Установка
 
 1. Клонируйте репозиторий:
-
-```bash
 git clone https://github.com/voland2610/Practice-post.git
+
+2. Перейдите в папку проекта:
+cd Practice-post
+
+3. Установите зависимости:
+npm install
+
+4. Запуск
+npm run dev
+
