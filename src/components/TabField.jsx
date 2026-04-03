@@ -1,4 +1,5 @@
 import TabButton from "./TabButton";
+import styles from '../styles/tabField/tabField.module.css'; 
 
 const TabField = () => {
   const tabs = [
@@ -9,9 +10,9 @@ const TabField = () => {
   
   return (
     <>
-      <div>
+      <div className={styles.tabsField}>
         {tabs.map((tab, index)=>(
-            <TabButton label={tab.label} path={tab.path} key={index}/>
+            <TabButton styles={styles} label={tab.label} path={tab.path} key={index}/>
         ))}
       </div>
     </>

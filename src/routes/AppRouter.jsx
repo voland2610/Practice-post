@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router";
 import WelcomePage from "../pages/WelcomePage";
 import MainLayout from "../layout/MainLayout";
 import ContentPage from "../pages/ContentPage";
-import UserCard from "../components/UserCard";
+import UserCard from "../components/UsersCards";
 import CommentCard from "../components/CommentCard";
 import PostCard from "../components/PostCard";
 

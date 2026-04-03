@@ -1,0 +1,41 @@
+.users_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 2fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.user_card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user_card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.user_name {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.user_info {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.user_info span {
+  font-weight: 500;
+  color: #555;
+}
+
+.Louding{
+  display: flex;
+  font-size: 30px;
+  justify-content: center;
+}

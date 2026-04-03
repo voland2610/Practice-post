@@ -1,0 +1,11 @@
+.tabsField{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.tab{
+    width: 200px;
+    font-size: 30px;
+    font-weight: 300;
+}
