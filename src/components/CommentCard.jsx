@@ -1,5 +1,5 @@
 const CommentCard = () => {
-    return<></>
+    return(<></>)
 }
 
 export default CommentCard
