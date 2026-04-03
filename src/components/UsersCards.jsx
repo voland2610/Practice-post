@@ -15,7 +15,7 @@ const UserCard = () => {
       })  
     }, 1000)
   }, []);
-
+  // Сделать проверку на то загрузились ли пользователи
   return (
     <>
       {isLouding ? <div className={styles.Louding}>"Загрузка..."</div> : users.map(user => <User key={user.id} user={user} />) }
