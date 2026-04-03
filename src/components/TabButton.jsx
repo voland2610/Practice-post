@@ -6,6 +6,7 @@ const TabButton = (props) => {
   const goToSettings = () => {
     navigate(path);
   }
+  //сделать отображать куда нажал
   return (
     <>
       <button className={styles.tab} onClick={goToSettings}>{label}</button>
