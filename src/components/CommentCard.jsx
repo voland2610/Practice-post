@@ -1,30 +1,21 @@
-import { useEffect, useState } from "react";
-import styles from "../styles/UsersCard/UserCard.module.css";
-import Comment from "./Commet";
+import Comment from "./Comment";
+import useFetch from "../hooks/useFetch";
+import {getComments} from "../api/comments";
 
 const CommentCard = () => {
-  const [comments, setComments] = useState([]);
-  const [isLouding, setIsLouding] = useState(true);
-  
-  useEffect(() => {
-    setTimeout(() => {
-      fetch("https://jsonplaceholder.typicode.com/comments")
-        .then((response) => response.json())
-        .then((json) => {
-          setComments(json);
-          setIsLouding(false);
-        });
-    }, 1000);
-  }, []);
-  
+  const { data: comments, isLoading, error } = useFetch(getComments);
+
   return (
-    <>
-      {isLouding ? (
-        <div className={styles.Louding}>"Загрузка..."</div>
-      ) : (
-        comments.map((comment) => <Comment key={comment.id} comment={comment} />)
-      )}
-    </>
+    <div>
+      {isLoading && <p>Загрузка...</p>}
+      {error && <p>Ошибка: {error}</p>}
+
+      {!isLoading &&
+        !error &&
+        comments?.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
+    </div>
   );
 };
 
