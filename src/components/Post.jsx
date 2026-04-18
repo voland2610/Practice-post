@@ -1,52 +1,45 @@
-import { useState } from "react";
-import styles from "../styles/postCard/Post.module.css";
+import { useMemo, useState } from "react";
+import useFetch from "../hooks/useFetch";
+import { getCommentsByPostId } from "../api/comments";
+import styles from "../styles/Comments/Comment.module.css";
 
 const Post = ({ post }) => {
-  const [comments, setComments] = useState([]);
   const [isActive, setIsActive] = useState(false);
-  // useEffect(()=>{
-  //     fetch(`https://jsonplaceholder.typicode.com/comments/?postId=${post.postId}`)
-  //     .then((response)=> response.json())
-  //     .then((json)=> setComments(json))
-  // },[])
 
-  function showComments() {
-    if (isActive) {
-      setIsActive(false);
-      return;
-    }
+  const fetchComments = useMemo(() => {
+    if (!isActive) return null;
+    return () => getCommentsByPostId(post.id);
+  }, [isActive, post.id]);
 
-    if (comments.length === 0) {
-      fetch("https://jsonplaceholder.typicode.com/comments/?postId=" + post.id)
-        .then((response) => response.json())
-        .then((json) => {
-          setComments(json);
-          setIsActive(true);
-        });
-    } else {
-      setIsActive(true);
-    }
-  }
+  const { data: comments, isLoading, error } = useFetch(fetchComments);
 
   return (
-    <div className={styles.post_card}>
-      <h2 className={styles.post_title}>{post.title}</h2>
+    <div>
+      <h2>{post.title}</h2>
+      <p>{post.body}</p>
 
-      <p className={styles.post_body}>{post.body}</p>
+      <button onClick={() => setIsActive(!isActive)}>
+        Комментарии
+      </button>
 
-      <div className={styles.post_footer}>
-        <button onClick={showComments} className={styles.comment_btn}>
-          Комментарии
-        </button>
-      </div>
-      {isActive &&
-        comments.map((comment) => (
-          <div key={comment.id} className={styles.comment}>
-            <div className={styles.comment_name}>{comment.name}</div>
-            <div className={styles.comment_email}>{comment.email}</div>
-            <div className={styles.comment_body}>{comment.body}</div>
-          </div>
-        ))}
+      {isActive && (
+        <div className={styles.comments_container}>
+          {isLoading && <p>Загрузка...</p>}
+          {error && <p>Ошибка: {error}</p>}
+
+          {comments?.map((c) => (
+            <div key={c.id} className={styles.comment_card}>
+              <h4 className={styles.comment_title}>{c.name}</h4>
+
+              <p className={styles.comment_body}>{c.body}</p>
+
+              <p className={styles.comment_email}>
+                <span>Email:</span> {c.email}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

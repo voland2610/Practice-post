@@ -1,31 +1,26 @@
 import { useState, useEffect } from "react";
 
-function useFetch(url) {
+function useFetch(fetchFn) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!url) return;
+    if (!fetchFn) return;
 
     setIsLoading(true);
 
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Ошибка загрузки");
-        }
-        return response.json();
-      })
+    fetchFn()
       .then((data) => {
         setData(data);
         setIsLoading(false);
+        console.log(123123)
       })
       .catch((err) => {
         setError(err.message);
         setIsLoading(false);
       });
-  }, [url]);
+  }, [fetchFn]);
 
   return { data, isLoading, error };
 }

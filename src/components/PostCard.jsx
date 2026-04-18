@@ -1,28 +1,29 @@
-import { useEffect, useState } from "react";
 import Post from "./Post";
 import styles from "../styles/postCard/Post.module.css";
+import useFetch from "../hooks/useFetch";
+import getPosts from "../api/posts";
 
 const PostCard = () => {
-  const [posts, usePosts] = useState([]);
-  const [isLouding, setIsLouding] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      fetch("https://jsonplaceholder.typicode.com/posts")
-        .then((response) => response.json())
-        .then((json) => {
-          usePosts(json);
-          setIsLouding(false);
-        });
-    }, 1000);
-  }, []);
+  const { data: posts, isLoading, error } = useFetch(getPosts);
+
   return (
-    <>
-      {isLouding ? (
-        <div className={styles.Louding}>"Загрузка..."</div>
-      ) : (
-        posts.map((post) => <Post key={post.id} post={post} />)
+    <div className={styles.posts_container}>
+      {isLoading && <div className={styles.loading}>Загрузка...</div>}
+
+      {error && <div className={styles.error}>Ошибка: {error}</div>}
+
+      {!isLoading && !error && posts?.length === 0 && (
+        <div className={styles.empty}>Нет постов</div>
       )}
-    </>
+
+      {!isLoading &&
+        !error &&
+        posts?.map((post) => (
+          <div key={post.id} className={styles.post_wrapper}>
+            <Post post={post} />
+          </div>
+        ))}
+    </div>
   );
 };
 

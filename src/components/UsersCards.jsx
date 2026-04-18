@@ -1,25 +1,23 @@
-import { useEffect, useState } from "react";
 import styles from "../styles/UsersCard/UserCard.module.css";
 import User from "./User";
+import useFetch from "../hooks/useFetch";
+import getUsers from "../api/users";
 
 const UserCard = () => {
-  const [users, setUsers] = useState([]);
-  const [isLouding, setIsLouding] = useState(true);
-  useEffect(() => {
-    setTimeout(()=>{
-      fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => {
-        setUsers(json)
-        setIsLouding(false)
-      })  
-    }, 1000)
-  }, []);
-  // Сделать проверку на то загрузились ли пользователи
+  const { data: users, isLoading, error } = useFetch(getUsers);
+
   return (
-    <>
-      {isLouding ? <div className={styles.Louding}>"Загрузка..."</div> : users.map(user => <User key={user.id} user={user} />) }
-    </>
+    <div>
+      {isLoading && <div className={styles.loading}>Загрузка...</div>}
+
+      {error && <div>Ошибка: {error}</div>}
+
+      {!isLoading &&
+        !error &&
+        users?.map((user) => (
+          <User key={user.id} user={user} />
+        ))}
+    </div>
   );
 };
 

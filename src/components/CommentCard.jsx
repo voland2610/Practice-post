@@ -1,24 +1,14 @@
-import { useState, useEffect } from "react";
-import styles from "../styles/UsersCard/UserCard.module.css";
 import Comment from "./Comment";
 import useFetch from "../hooks/useFetch";
+import {getComments} from "../api/comments";
 
 const CommentCard = () => {
-  const [url, setUrl] = useState(null);
-
-  const { data: comments, isLoading, error } = useFetch(url);
-
-  useEffect(() => {
-    setUrl("https://jsonplaceholder.typicode.com/comments");
-  }, []);
-
-  if (!url) return null;
+  const { data: comments, isLoading, error } = useFetch(getComments);
 
   return (
     <div>
-      {isLoading && <div className={styles.loading}>Загрузка...</div>}
-
-      {error && <div>Ошибка: {error}</div>}
+      {isLoading && <p>Загрузка...</p>}
+      {error && <p>Ошибка: {error}</p>}
 
       {!isLoading &&
         !error &&
